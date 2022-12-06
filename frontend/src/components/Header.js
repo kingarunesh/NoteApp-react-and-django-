@@ -1,7 +1,9 @@
 function Header() {
   return (
     <>
-      <h1>Header</h1>
+      <div className="app-header">
+        <h1>Header</h1>
+      </div>
     </>
   );
 }
