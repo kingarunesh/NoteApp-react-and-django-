@@ -1,12 +1,12 @@
 import Header from "./components/Header";
 import NotesListPage from "./pages/NotesListPage";
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import NotePage from "./pages/NotePage";
 import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="container dark">
         <div className="app">
           <Header />
@@ -14,7 +14,7 @@ function App() {
           <Route path="/note/:id" component={NotePage} />
         </div>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
