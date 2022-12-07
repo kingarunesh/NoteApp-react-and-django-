@@ -7,7 +7,7 @@ const NotePage = ({ match, history }) => {
 
   useEffect(() => {
     getNote();
-  }, []);
+  }, [noteID]);
 
   const getNote = async () => {
     if (noteID === "new") return;
@@ -61,6 +61,10 @@ const NotePage = ({ match, history }) => {
     history.push("/");
   };
 
+  const handleChange = (value) => {
+    setNote((note) => ({ ...note, body: value }));
+  };
+
   return (
     <>
       <div className="note">
@@ -77,7 +81,7 @@ const NotePage = ({ match, history }) => {
         </div>
         <textarea
           onChange={(e) => {
-            setNote({ ...note, body: e.target.value });
+            handleChange(e.target.value);
           }}
           value={note?.body}
         ></textarea>
