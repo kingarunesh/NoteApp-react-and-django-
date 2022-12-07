@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
-import { Link } from "react-router-dom";
 
 const NotePage = ({ match, history }) => {
   const noteID = match.params.id;
@@ -31,17 +30,24 @@ const NotePage = ({ match, history }) => {
     history.push("/");
   };
 
+  const deleteHanlder = async () => {
+    fetch(`/api/note/${noteID}/delete/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    history.push("/");
+  };
+
   return (
     <>
       <div className="note">
         <div className="note-header">
           <h3>
-            {/* <Link to="/">
-              <ArrowLeft />
-            </Link> */}
-
             <ArrowLeft onClick={handler} />
           </h3>
+          <button onClick={deleteHanlder}>Delete</button>
         </div>
         <textarea
           onChange={(e) => {
