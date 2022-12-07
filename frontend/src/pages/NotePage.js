@@ -10,6 +10,8 @@ const NotePage = ({ match, history }) => {
   }, []);
 
   const getNote = async () => {
+    if (noteID === "new") return;
+
     let response = await fetch(`/api/note/${noteID}/`);
     let data = await response.json();
     setNote(data);
@@ -26,8 +28,27 @@ const NotePage = ({ match, history }) => {
   };
 
   const handler = () => {
-    updateNote();
+    console.log(note);
+    console.log(note.body);
+    if (noteID !== "new" && note.body === "") {
+      deleteHanlder();
+    } else if (noteID !== "new") {
+      updateNote();
+    } else if (noteID === "new" && note.body !== null) {
+      createNote();
+    }
+
     history.push("/");
+  };
+
+  const createNote = async () => {
+    fetch("/api/note/create/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(note),
+    });
   };
 
   const deleteHanlder = async () => {
@@ -47,13 +68,18 @@ const NotePage = ({ match, history }) => {
           <h3>
             <ArrowLeft onClick={handler} />
           </h3>
-          <button onClick={deleteHanlder}>Delete</button>
+
+          {noteID !== "new" ? (
+            <button onClick={deleteHanlder}>Delete</button>
+          ) : (
+            <button onClick={handler}>Done</button>
+          )}
         </div>
         <textarea
           onChange={(e) => {
             setNote({ ...note, body: e.target.value });
           }}
-          defaultValue={note?.body}
+          value={note?.body}
         ></textarea>
       </div>
     </>
